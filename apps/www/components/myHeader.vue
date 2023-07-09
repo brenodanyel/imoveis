@@ -1,7 +1,23 @@
 <template>
 	<header class="flex justify-between items-center py-5">
 		<div>Logo</div>
-		<nav>Navegação</nav>
+
+		<nav>
+			<ul class="flex space-x-5">
+				<li>
+					<RouterLink to="/" class="hover:underline font-medium">Home</RouterLink>
+				</li>
+				<li>
+					<RouterLink to="/imoveis" class="hover:underline font-medium">Buscar imóveis</RouterLink>
+				</li>
+				<li>
+					<RouterLink to="/sobre" class="hover:underline font-medium">Sobre</RouterLink>
+				</li>
+				<li>
+					<RouterLink to="/contato" class="hover:underline font-medium">Contato</RouterLink>
+				</li>
+			</ul>
+		</nav>
 
 		<div class="space-x-2">
 			<button type="button" class="text-blue-500 hover:text-blue-700 px-5 py-2 font-medium rounded-md">
