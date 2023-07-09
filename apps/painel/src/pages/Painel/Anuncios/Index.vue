@@ -60,10 +60,10 @@
 							<div class="row q-gutter-xs flex-center no-wrap">
 								<div>
 									<q-btn icon="edit" dense round class="text-primary" @click="onClickEdit(props.row)">
-										<q-tooltip> Editar </q-tooltip>
+										<q-tooltip>Editar</q-tooltip>
 									</q-btn>
 									<q-btn icon="visibility" dense round class="text-primary" @click="onClickEdit(props.row)">
-										<q-tooltip> Visualizar </q-tooltip>
+										<q-tooltip>Visualizar</q-tooltip>
 									</q-btn>
 								</div>
 							</div>
@@ -154,6 +154,7 @@ async function onClickCreate() {
 				thumbnail: undefined,
 				comodidades: [],
 				caracteristicas: {},
+				imagens: [],
 				endereco: {
 					rua: '',
 					numero: '',

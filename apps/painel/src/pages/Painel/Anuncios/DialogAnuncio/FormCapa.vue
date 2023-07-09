@@ -71,6 +71,8 @@ async function buscarImagem() {
 		HttpException(data);
 		return;
 	}
+
+	$emit('change-thumbnail', data.url);
 }
 
 async function removerImagem() {
