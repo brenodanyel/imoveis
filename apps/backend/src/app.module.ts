@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { ScheduleModule } from '@nestjs/schedule';
 import { AppController } from './app.controller';
+import { AnunciosModule } from './modules/anuncios/anuncios.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { CaracteristicasModule } from './modules/caracteristicas/caracteristicas.module';
 import { CategoriasModule } from './modules/categorias/categorias.module';
@@ -33,6 +34,7 @@ import { ThrottlerModule } from './shared/throttler.module';
 		UserModule,
 		CompanyModule,
 		PlanModule,
+		AnunciosModule,
 		AuthModule,
 		CaracteristicasModule,
 		CategoriasModule,
