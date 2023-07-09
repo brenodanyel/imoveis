@@ -2,7 +2,7 @@
 	<header class="flex justify-between items-center py-5">
 		<div>Logo</div>
 
-		<nav>
+		<nav class="hidden md:block">
 			<ul class="flex space-x-5">
 				<li>
 					<RouterLink to="/" class="hover:underline font-medium">Home</RouterLink>

@@ -4,7 +4,7 @@
 			<MyHeader />
 		</div>
 
-		<div class="container mx-auto px-8">
+		<div class="container mx-auto px-8 flex-grow">
 			<NuxtPage />
 		</div>
 

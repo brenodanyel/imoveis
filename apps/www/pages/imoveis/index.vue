@@ -1,13 +1,13 @@
 <template>
 	<div class="flex h-full py-10">
-		<div class="w-1/4 border-r-2">
+		<div class="w-1/4 border-r-2 hidden md:block">
 			<p>Filtros</p>
 		</div>
 
-		<div class="w-full px-5 md:px-12 space-y-2">
+		<div class="w-full md:px-12 space-y-2">
 			<p class="text-gray-800 text-3xl font-bold">Imóveis:</p>
 
-			<div class="flex justify-between gap-2">
+			<div class="flex justify-between gap-2 flex-wrap">
 				<div class="flex items-center gap-2">
 					<i class="bi bi-filter-left"></i>
 					<p class="text-gray-500">Ordenar por:</p>
@@ -31,7 +31,7 @@
 
 			<div class="grid grid-cols-1 md:grid-cols-3 gap-3" v-if="data?.data">
 				<RouterLink
-					class="border rounded-lg overflow-hidden hover:scale-[1.01] duration-200 text-left shadow-md h-80"
+					class="border rounded-lg overflow-hidden hover:scale-[1.01] duration-200 text-left shadow-md h-96"
 					:to="`/imoveis/${imovel.id}`"
 					v-for="imovel in data.data"
 					:key="imovel.id"
@@ -56,8 +56,6 @@
 
 <script setup lang="ts">
 import useQueryPagination from '../../composables/useQueryPagination';
-
-const router = useRouter();
 
 const { parsePaginationFromQueryUrl, syncPaginationWithQueryUrl } = useQueryPagination();
 
@@ -109,11 +107,13 @@ type Response = {
 	meta: { rowsNumber: number };
 };
 
-const { data, refresh, execute } = await useFetch<Response>('http://localhost:3000/anuncios', {
-	method: 'GET',
-	query: {
-		...pagination.value,
-	},
+const { data, refresh } = await useAsyncData<Response>('imoveis', () => {
+	return $fetch('http://localhost:3000/anuncios', {
+		method: 'GET',
+		query: {
+			...pagination.value,
+		},
+	});
 });
 
 pagination.value.rowsNumber = data.value?.meta.rowsNumber ?? 0;
@@ -132,7 +132,6 @@ watch(ordenacao, () => {
 		sortBy: ordenacao.value.key,
 		descending: ordenacao.value.descending,
 	};
-	console.log(toRaw(pagination.value));
-	execute();
+	refresh();
 });
 </script>
