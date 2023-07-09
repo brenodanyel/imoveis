@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "start:www:dev": "cd apps/www && npm run dev",
     "start:painel:dev": "cd apps/painel && npm run dev",
-    "start:backend:dev": "cd apps/backend && npm run start:dev",
+    "start:backend:dev": "cd apps/backend && npm run start:dev"
   },
   "keywords": [],
   "author": "",
