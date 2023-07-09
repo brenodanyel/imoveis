@@ -4,7 +4,9 @@
 		<div class="py-36">
 			<Hero />
 		</div>
-		<Categorias />
+		<div class="py-36">
+			<Categorias />
+		</div>
 	</div>
 </template>
 

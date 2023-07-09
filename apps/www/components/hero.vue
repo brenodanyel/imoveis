@@ -6,9 +6,12 @@
 			<p class="text-xl text-gray-600 text-center md:text-left">Encontre o imóvel ideal para você.</p>
 
 			<div class="flex gap-2">
-				<button :class="btn({ size: 'md' })">Quero comprar um imóvel</button>
-				<button class="text-xl">Quero alugar um imóvel</button>
-				<!-- <button :class="btn()">Quero alugar um imóvel</button> -->
+				<button class="bg-blue-500 hover:bg-blue-700 active:opacity-70 duration-200 text-medium px-4 py-2 rounded-md text-white">
+					Quero comprar um imóvel
+				</button>
+				<button class="bg-blue-500 hover:bg-blue-700 active:opacity-70 duration-200 text-medium px-4 py-2 rounded-md text-white">
+					Quero alugar um imóvel
+				</button>
 			</div>
 		</div>
 		<div>
@@ -16,7 +19,3 @@
 		</div>
 	</div>
 </template>
-
-<script setup lang="ts">
-import btn from '~/component-variants/btn';
-</script>
