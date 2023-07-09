@@ -1,0 +1,52 @@
+<mjml>
+  <mj-head>
+    <mj-title>Nome do software - Confirmação de pagamento</mj-title>
+    <mj-font name="Inter" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap" />
+    <mj-style>
+      .table td,
+      th {
+        border: 1px solid #1976D2;
+        padding: .5rem;
+      }
+    </mj-style>
+  </mj-head>
+
+  <mj-body width="600px">
+    <mj-include path="./components/header.mjml" />
+
+    <mj-wrapper background-color="#fff" border="1px solid #1976D2">
+      <mj-section>
+        <mj-column width="600px">
+          <mj-text font-size="16px" font-family="'Inter', sans-serif" line-height="150%">Olá <b>{{name}}</b>!</mj-text>
+
+          <mj-text font-size="16px" font-family="'Inter', sans-serif" line-height="150%">
+            O administrador <b>{{convidado_por}}</b> acabou de criar a sua conta na plataforma.
+          </mj-text>
+
+          <mj-table css-class="table" font-size="16px" font-family="'Inter', sans-serif">
+            <tr>
+              <th style="font-weight: bold" colspan="2">Dados de acesso</th>
+            </tr>
+            <tr>
+              <td style="font-weight: bold">E-mail</td>
+              <td>{{email}}</td>
+            </tr>
+            <tr>
+              <td style="font-weight: bold">Senha</td>
+              <td>{{password}}</td>
+            </tr>
+            <tr style="background: #1976D2">
+              <td style="color: #fff" colspan="2">OBS: Lembre-se de alterar a sua senha ao entrar na plataforma.</td>
+            </tr>
+          </mj-table>
+
+          <mj-button font-size="22px" font-weight="bold" background-color="#1976D2" border-radius="4px" color="#fff" font-family="'Inter', sans-serif" href="{{link}}">
+            Entrar na plataforma
+          </mj-button>
+        </mj-column>
+      </mj-section>
+
+      <mj-include path="./components/footer.mjml" />
+    </mj-wrapper>
+  </mj-body>
+</mjml>

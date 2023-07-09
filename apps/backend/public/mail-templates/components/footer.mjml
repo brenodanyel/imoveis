@@ -1,0 +1,16 @@
+<mj-section>
+  <mj-column>
+    <mj-divider border-width="1px" border-color="#dadada" />
+    <mj-text font-size="16px" align="right">
+      <a href="https://url_site.com.br/" target="_blank" style="color: #1976D2; text-weight: bold; text-decoration: none;">nome do software</a>
+    </mj-text>
+  </mj-column>
+</mj-section>
+
+<mj-section>
+  <mj-column>
+    <mj-text font-family="'Inter', sans-serif" color="#8d8d8d" font-size="16px" line-height="150%">
+      Este é um e-mail disparado automaticamente pelo sistema. Por favor, não responda.
+    </mj-text>
+  </mj-column>
+</mj-section>

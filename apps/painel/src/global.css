@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap");
+
+body {
+	font-family: Inter, sans-serif;
+}
+
+.table-header-fixed-top thead tr th {
+	position: sticky;
+	z-index: 1;
+}
+
+.table-header-fixed-top thead tr:first-child th {
+	top: 0;
+}
+
+.text-underline {
+	text-decoration: underline;
+}
+
+.text-12 {
+	font-size: 12px;
+}
+
+.text-14 {
+	font-size: 14px;
+}
+
+.text-16 {
+	font-size: 16px;
+}
+
+.text-18 {
+	font-size: 18px;
+}
+
+.text-20 {
+	font-size: 20px;
+}
+
+.text-22 {
+	font-size: 22px;
+}
+
+.text-24 {
+	font-size: 24px;
+}
+
+.text-26 {
+	font-size: 26px;
+}
+
+.text-28 {
+	font-size: 28px;
+}
+
+.text-30 {
+	font-size: 30px;
+}
+
+.text-32 {
+	font-size: 32px;
+}
+
+.text-34 {
+	font-size: 34px;
+}
+
+.text-36 {
+	font-size: 36px;
+}

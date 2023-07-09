@@ -1,0 +1,60 @@
+@import 'quasar/src/css/variables.sass'
+
+$primary: #bb86fc // AZUL
+$secondary: #26a69a // TURQUESA
+$accent: #9C27B0 // ROXO
+
+$dark: #222 // PRETO
+$dark-page: #1D1D1D // PRETO
+
+$light: #fff
+$light-page: rgb(250, 250, 250)
+
+$positive: #21BA45 // VERDE
+$negative: #C10015 // VERMELHO
+$info: #31CCEC // AZUL-CLARO
+$warning: #F2C037 // AMARELO
+
+$generic-border-radius: 8px
+$button-border-radius: 8px
+$separator-color: rgba(0, 0, 0, .25)
+$separator-dark-color: rgba(255, 255, 255, .1)
+$menu-box-shadow-dark: none
+$menu-box-shadow: none
+
+body
+    background-color: $light-page
+    .q-header,
+    .q-card
+        background-color: $light-page !important
+
+.body--dark
+    background-color: $dark-page
+    .q-header,
+    .q-card
+        background-color: $dark-page !important
+
+body.body--dark
+    --q-negative: #f44336
+
+.q-field--dark
+    .q-field__control
+        &:before
+            border-color: $separator-dark-color !important
+
+.q-field__control
+    &:before
+        border-color: $separator-color !important
+
+input,
+select
+    color: $input-text-color !important
+    -webkit-text-fill-color: $input-text-color !important
+    -webkit-background-clip: text !important
+    background-clip: text !important
+
+body.body--dark
+    input,
+    select
+        color: #fff !important
+        -webkit-text-fill-color: #fff !important

@@ -1,0 +1,278 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       Int    @id @default(autoincrement())
+  email    String @unique
+  name     String
+  password String
+  cpf      String @unique
+
+  companyId Int?
+  company   Company? @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  active    Boolean? @default(true)
+
+  userCompanies UserCompanies[]
+  anuncios      Anuncio[]
+
+  @@map("users")
+}
+
+model UserCompanies {
+  id Int @id @default(autoincrement())
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  companyId          Int?
+  company            Company?             @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userCompaniesRoles UserCompaniesRoles[]
+
+  @@map("user_companies")
+}
+
+model UserCompaniesRoles {
+  id Int @id @default(autoincrement())
+
+  userCompanyId Int
+  userCompany   UserCompanies @relation(fields: [userCompanyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  roleId Int
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("user_companies_roles")
+}
+
+model Company {
+  id           Int    @id @default(autoincrement())
+  name         String @unique
+  cnpj         String @unique
+  phone_number String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  active    Boolean? @default(true)
+
+  users          User[]
+  usersCompanies UserCompanies[]
+
+  companyPlan    CompanyPlan?
+  companyAddress CompanyAddress?
+
+  @@map("companies")
+}
+
+model CompanyPlan {
+  id Int @id @default(autoincrement())
+
+  planId Int
+  plan   Plan @relation(fields: [planId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  paidAt    DateTime @default(now())
+  expiresAt DateTime
+
+  createdAt DateTime @default(now())
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId Int     @unique
+
+  @@map("companies_plans")
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  slug String @unique
+  name String
+
+  userCompaniesRoles UserCompaniesRoles[]
+
+  @@map("roles")
+}
+
+model CompanyAddress {
+  id Int @id @default(autoincrement())
+
+  street     String
+  number     String
+  complement String?
+  district   String
+  city       String
+  state      String
+  country    String
+  zipCode    String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  companyId Int     @unique
+
+  @@map("companies_addresses")
+}
+
+model Plan {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  price  Float
+  public Boolean @default(true)
+  active Boolean @default(true)
+
+  limit_users Int
+
+  companyPlans CompanyPlan[]
+
+  @@map("plans")
+}
+
+model ConfirmationCode {
+  id String @id @default(cuid())
+
+  token String
+
+  createdAt DateTime @default(now())
+
+  @@map("confirmation_codes")
+}
+
+model Anuncio {
+  id Int @id @default(autoincrement())
+
+  createdAt DateTime  @default(now())
+  expiresAt DateTime?
+
+  titulo    String
+  descricao String
+  proposito String
+  thumbnail String?
+
+  valor            Float
+  valor_iptu       Float
+  valor_condominio Float
+
+  area_total      Float
+  area_construida Float
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  subcategoria   Subcategoria @relation(fields: [subcategoriaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  subcategoriaId Int
+
+  comodidades     AnuncioComodidade[]
+  caracteristicas AnuncioCaracteristica[]
+
+  endereco   Endereco @relation(fields: [enderecoId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  enderecoId Int
+
+  imagens AnuncioImagem[]
+
+  @@map("anuncios")
+}
+
+model AnuncioImagem {
+  id Int @id @default(autoincrement())
+
+  anuncioId Int
+  anuncio   Anuncio @relation(fields: [anuncioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  url String
+
+  @@map("anuncios_imagens")
+}
+
+model Endereco {
+  id Int @id @default(autoincrement())
+
+  rua         String
+  numero      String
+  complemento String?
+  bairro      String
+  cidade      String
+  estado      String
+  pais        String
+  cep         String
+
+  createdAt DateTime @default(now())
+
+  anuncios Anuncio[]
+
+  @@map("endereco")
+}
+
+model Comodidade {
+  id Int @id @default(autoincrement())
+
+  nome              String              @unique
+  anuncioComodidade AnuncioComodidade[]
+
+  @@map("comodidades")
+}
+
+model AnuncioComodidade {
+  id Int @id @default(autoincrement())
+
+  anuncioId Int
+  anuncio   Anuncio @relation(fields: [anuncioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  comodidadeId Int
+  comodidade   Comodidade @relation(fields: [comodidadeId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("anuncios_comodidades")
+}
+
+model Caracteristica {
+  id Int @id @default(autoincrement())
+
+  nome                  String                  @unique
+  anuncioCaracteristica AnuncioCaracteristica[]
+
+  @@map("caracteristicas")
+}
+
+model AnuncioCaracteristica {
+  id Int @id @default(autoincrement())
+
+  anuncioId Int
+  anuncio   Anuncio @relation(fields: [anuncioId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  caracteristicaId Int
+  caracteristica   Caracteristica @relation(fields: [caracteristicaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  qty Int
+
+  @@map("anuncios_caracteristicas")
+}
+
+model Categoria {
+  id Int @id @default(autoincrement())
+
+  nome          String         @unique
+  subcategorias Subcategoria[]
+
+  @@map("categorias")
+}
+
+model Subcategoria {
+  id Int @id @default(autoincrement())
+
+  nome String @unique
+
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  anuncios Anuncio[]
+
+  @@map("subcategorias")
+}

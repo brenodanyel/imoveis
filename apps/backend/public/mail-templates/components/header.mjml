@@ -1,0 +1,5 @@
+<mj-section background-color="#1976D2">
+  <mj-column width="600px">
+    <mj-text font-size="32px" font-family="'Inter', sans-serif" color="#fff" align="center" font-weight="bold" line-height="150%">Nome do software</mj-text>
+  </mj-column>
+</mj-section>
