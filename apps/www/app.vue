@@ -1,7 +1,9 @@
 <template>
 	<div class="min-h-screen flex flex-col justify-between">
-		<div class="border-b container mx-auto px-8">
-			<MyHeader />
+		<div class="border-b">
+			<div class="container mx-auto px-8">
+				<MyHeader />
+			</div>
 		</div>
 
 		<div class="container mx-auto px-8 flex-grow">

@@ -1,18 +1,18 @@
 <template>
 	<div class="flex h-full py-10">
-		<div class="w-1/4 border-r-2 hidden md:block">
-			<p>Filtros</p>
+		<div class="hidden w-1/3 border-r-2 md:block md:px-12">
+			<ImoveisFiltros :filter="filtro" @apply-filter="refresh()" :loading="pending" />
 		</div>
 
-		<div class="w-full md:px-12 space-y-2">
-			<p class="text-gray-800 text-3xl font-bold">Imóveis:</p>
+		<div class="w-full space-y-2 md:px-12">
+			<p class="text-3xl font-bold text-gray-800">Imóveis:</p>
 
-			<div class="flex justify-between gap-2 flex-wrap">
+			<div class="flex flex-wrap justify-between gap-2">
 				<div class="flex items-center gap-2">
 					<i class="bi bi-filter-left"></i>
 					<p class="text-gray-500">Ordenar por:</p>
 
-					<select class="p-1 border rounded-lg" v-model="ordenacao">
+					<select class="rounded-lg border p-1" v-model="ordenacao">
 						<option v-for="opcao in opcoesOrdenacao" :key="opcao.label" :value="opcao.value">{{ opcao.label }}</option>
 					</select>
 				</div>
@@ -29,16 +29,16 @@
 				</div>
 			</div>
 
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-3" v-if="data?.data">
+			<div class="grid grid-cols-1 gap-3 md:grid-cols-3" v-if="data?.data">
 				<RouterLink
-					class="border rounded-lg overflow-hidden hover:scale-[1.01] duration-200 text-left shadow-md h-96"
+					class="h-96 overflow-hidden rounded-lg border text-left shadow-md duration-200 hover:scale-[1.01]"
 					:to="`/imoveis/${imovel.id}`"
 					v-for="imovel in data.data"
 					:key="imovel.id"
 				>
-					<img :src="imovel.thumbnail" alt="imagem imovel" class="w-full h-[60%] object-cover" />
-					<div class="p-3 space-y-1">
-						<p class="text-blue-500 uppercase">{{ imovel.proposito }}</p>
+					<img :src="imovel.thumbnail" alt="imagem imovel" class="h-[60%] w-full object-cover" />
+					<div class="space-y-1 p-3">
+						<p class="uppercase text-blue-500">{{ imovel.proposito }}</p>
 						<p class="font-medium">{{ imovel.subcategoria.nome }}</p>
 						<p class="text-sm text-gray-500">{{ imovel.endereco.bairro }} ({{ imovel.endereco.cidade }})</p>
 						<div class="flex items-center gap-1">
@@ -56,6 +56,7 @@
 
 <script setup lang="ts">
 import useQueryPagination from '../../composables/useQueryPagination';
+import { Anuncio, Filtro } from '../../types/anuncios';
 
 const { parsePaginationFromQueryUrl, syncPaginationWithQueryUrl } = useQueryPagination();
 
@@ -72,42 +73,16 @@ const pagination = ref(
 watch(() => pagination.value, syncPaginationWithQueryUrl, { deep: true });
 
 type Response = {
-	data: {
-		id: number;
-		createdAt: string;
-		expiresAt: string | null;
-		titulo: string;
-		descricao: string;
-		proposito: string;
-		thumbnail: string;
-		valor: number;
-		valor_iptu: number;
-		valor_condominio: number;
-		area_total: number;
-		area_construida: number;
-		subcategoria: {
-			id: number;
-			nome: string;
-			categoriaId: number;
-		};
-		endereco: {
-			rua: string;
-			numero: string;
-			complemento: string;
-			bairro: string;
-			cidade: string;
-			estado: string;
-			pais: string;
-			cep: string;
-		};
-		caracteristicas: Record<string, number>;
-		comodidades: string[];
-		imagens: { url: string }[];
-	}[];
-	meta: { rowsNumber: number };
+	data: Anuncio[];
+	meta: {
+		rowsNumber: number;
+	};
 };
 
-const { data, refresh } = await useAsyncData<Response>('imoveis', () => {
+const { data, refresh, pending } = await useAsyncData<Response>('imoveis', async () => {
+	if (process.client) {
+		await new Promise((resolve) => setTimeout(resolve, 500));
+	}
 	return $fetch('http://localhost:3000/anuncios', {
 		method: 'GET',
 		query: {
@@ -133,5 +108,13 @@ watch(ordenacao, () => {
 		descending: ordenacao.value.descending,
 	};
 	refresh();
+});
+
+const filtro = ref<Filtro>({
+	max_valor: null,
+	min_valor: null,
+	proposito: null,
+	comodidades: [],
+	subcategoria: [],
 });
 </script>

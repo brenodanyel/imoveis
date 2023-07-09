@@ -4,7 +4,7 @@ export default defineNuxtConfig({
 	devtools: { enabled: true },
 	css: ['bootstrap-icons/font/bootstrap-icons.css'],
 	imports: {
-		dirs: ['component-variants'],
+		dirs: ['types'],
 	},
 	postcss: {
 		plugins: {
