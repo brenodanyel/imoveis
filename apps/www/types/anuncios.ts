@@ -33,8 +33,8 @@ export type Anuncio = {
 
 export type Filtro = {
 	proposito: string | null;
-	subcategoria: number[];
+	subcategorias: number[];
 	min_valor: number | null;
 	max_valor: number | null;
-	comodidades: string[];
+	comodidades: number[];
 };

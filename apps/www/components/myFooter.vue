@@ -50,7 +50,7 @@
 			</div>
 		</div>
 
-		<div>
+		<div class="space-y-2">
 			<h3 class="text-2xl font-bold">Sobre</h3>
 			<div class="flex flex-col">
 				<a href="#" class="text-gray-500 hover:underline">Quem somos</a>

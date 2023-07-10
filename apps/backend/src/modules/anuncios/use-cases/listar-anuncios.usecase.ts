@@ -22,7 +22,28 @@ export class ListarAnunciosUseCase {
 				comodidades: { include: { comodidade: true } },
 				imagens: true,
 			},
+			where: {},
 		};
+
+		if (data.proposito) {
+			query.where = { ...query.where, proposito: data.proposito };
+		}
+
+		if (data.subcategorias) {
+			query.where = { ...query.where, subcategoriaId: { in: data.subcategorias } };
+		}
+
+		if (data.min_valor) {
+			query.where = { ...query.where, valor: { gte: +data.min_valor } };
+		}
+
+		if (data.max_valor) {
+			query.where = { ...query.where, valor: { lte: +data.max_valor } };
+		}
+
+		if (data.comodidades) {
+			query.where = { ...query.where, comodidades: { some: { comodidadeId: { in: data.comodidades } } } };
+		}
 
 		const result = await paginate<Anuncio, Prisma.AnuncioFindManyArgs>(this.prismaService.anuncio, query, {
 			page: data?.page,

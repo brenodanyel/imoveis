@@ -3,17 +3,21 @@
 		<Expandable label="Propósito">
 			<ImoveisFiltrosPropositos :filter="filter" />
 		</Expandable>
+
 		<Expandable label="Tipos de imóvel">
-			<input class="w-full rounded-md border px-4 py-2" />
-		</Expandable>
-		<Expandable label="Faixa de preço">
-			<input class="w-full rounded-md border px-4 py-2" />
-		</Expandable>
-		<Expandable label="Comodidades">
-			<input class="w-full rounded-md border px-4 py-2" />
+			<ImoveisFiltrosTipos :filter="filter" />
 		</Expandable>
 
-		<div class="absolute bottom-5 left-0 w-full">
+		<Expandable label="Faixa de preço">
+			<ImoveisFiltrosValor :filter="filter" />
+		</Expandable>
+
+		<Expandable label="Comodidades">
+			<ImoveisFiltrosComodidades :filter="filter" />
+		</Expandable>
+
+		<!-- <div class="absolute bottom-5 left-0 w-full"> -->
+		<div class="">
 			<button
 				class="w-full bg-blue-500 hover:bg-blue-700 duration-200 px-4 py-2 rounded-md text-white font-medium"
 				@click="$emit('apply-filter')"

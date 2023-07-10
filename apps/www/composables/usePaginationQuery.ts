@@ -1,35 +1,31 @@
-export default function useQueryPagination() {
-	const router = useNuxtApp().$router;
+export default function usePaginationQuery() {
+	const { $router } = useNuxtApp();
 
 	type Pagination = {
 		sortBy: string;
 		descending: boolean;
 		page: number;
 		rowsPerPage: number;
-		rowsNumber?: number;
 	};
 
-	function syncPaginationWithQueryUrl(pagination: Pagination) {
+	function syncURL(pagination: Pagination) {
 		const { sortBy, descending, page, rowsPerPage } = pagination;
 
-		if (router.currentRoute.value.path === '/') {
-			return;
-		}
+		if ($router.currentRoute.value.path === '/') return;
 
-		router.push({
-			path: router.currentRoute.value.path,
+		$router.push({
+			path: $router.currentRoute.value.path,
 			query: {
-				...router.currentRoute.value.query,
+				...$router.currentRoute.value.query,
 				descending: descending ? 'desc' : 'asc',
 				sortBy,
 				page,
-				rowsPerPage,
 			},
 		});
 	}
 
-	function parsePaginationFromQueryUrl(defaultValue: Pagination): Pagination {
-		const query = router.currentRoute.value.query;
+	function parseURL(defaultValue: Pagination): Pagination {
+		const query = $router.currentRoute.value.query;
 
 		return {
 			sortBy: (query.sortBy || defaultValue.sortBy) as string,
@@ -39,8 +35,5 @@ export default function useQueryPagination() {
 		};
 	}
 
-	return {
-		syncPaginationWithQueryUrl,
-		parsePaginationFromQueryUrl,
-	};
+	return { syncURL, parseURL };
 }

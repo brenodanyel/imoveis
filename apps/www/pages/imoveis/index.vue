@@ -18,9 +18,9 @@
 				</div>
 
 				<div class="flex items-center gap-1">
-					<template v-if="pagination.rowsNumber">
+					<template v-if="data?.meta.rowsNumber">
 						<i class="bi bi-check-circle text-gray-500"></i>
-						<p class="text-gray-500">{{ pagination.rowsNumber }} {{ pagination.rowsNumber > 1 ? 'Imóveis encontrados' : 'Imóvel encontrado' }}</p>
+						<p class="text-gray-500">{{ data.meta.rowsNumber }} {{ data.meta.rowsNumber > 1 ? 'Imóveis encontrados' : 'Imóvel encontrado' }}</p>
 					</template>
 					<template v-else>
 						<i class="bi bi-x-circle text-gray-500"></i>
@@ -29,7 +29,7 @@
 				</div>
 			</div>
 
-			<div class="grid grid-cols-1 gap-3 md:grid-cols-3" v-if="data?.data">
+			<div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3" v-if="data?.data">
 				<RouterLink
 					class="h-96 overflow-hidden rounded-lg border text-left shadow-md duration-200 hover:scale-[1.01]"
 					:to="`/imoveis/${imovel.id}`"
@@ -55,43 +55,27 @@
 </template>
 
 <script setup lang="ts">
-import useQueryPagination from '../../composables/useQueryPagination';
-import { Anuncio, Filtro } from '../../types/anuncios';
+import useFilterQuery from '../../composables/useFilterQuery';
+import usePaginationQuery from '../../composables/usePaginationQuery';
+import { Anuncio } from '../../types/anuncios';
 
-const { parsePaginationFromQueryUrl, syncPaginationWithQueryUrl } = useQueryPagination();
+const filterQuery = useFilterQuery();
+const paginationQuery = usePaginationQuery();
 
 const pagination = ref(
-	parsePaginationFromQueryUrl({
-		sortBy: 'id',
+	paginationQuery.parseURL({
+		sortBy: 'createdAt',
 		descending: false,
 		page: 1,
 		rowsPerPage: 5,
-		rowsNumber: 0,
 	}),
 );
 
-watch(() => pagination.value, syncPaginationWithQueryUrl, { deep: true });
-
-type Response = {
-	data: Anuncio[];
-	meta: {
-		rowsNumber: number;
-	};
-};
-
-const { data, refresh, pending } = await useAsyncData<Response>('imoveis', async () => {
-	if (process.client) {
-		await new Promise((resolve) => setTimeout(resolve, 500));
-	}
-	return $fetch('http://localhost:3000/anuncios', {
-		method: 'GET',
-		query: {
-			...pagination.value,
-		},
-	});
-});
-
-pagination.value.rowsNumber = data.value?.meta.rowsNumber ?? 0;
+watch(
+	() => pagination.value,
+	() => paginationQuery.syncURL(pagination.value),
+	{ deep: true },
+);
 
 const opcoesOrdenacao = [
 	{ value: { key: 'createdAt', descending: false }, label: 'Mais recentes' },
@@ -101,20 +85,50 @@ const opcoesOrdenacao = [
 
 const ordenacao = ref(opcoesOrdenacao[0].value);
 
-watch(ordenacao, () => {
-	pagination.value = {
-		...pagination.value,
-		sortBy: ordenacao.value.key,
-		descending: ordenacao.value.descending,
-	};
-	refresh();
+pagination.value.sortBy = ordenacao.value.key;
+pagination.value.descending = ordenacao.value.descending;
+
+watch(
+	() => ordenacao.value,
+	() => {
+		pagination.value.sortBy = ordenacao.value.key;
+		pagination.value.descending = ordenacao.value.descending;
+	},
+	{ deep: true },
+);
+
+const filtro = ref(
+	filterQuery.parseURL({
+		max_valor: null,
+		min_valor: null,
+		proposito: null,
+		comodidades: [],
+		subcategorias: [],
+	}),
+);
+
+watch(
+	() => filtro.value,
+	() => filterQuery.syncURL(filtro.value),
+	{ deep: true },
+);
+
+type Response = { data: Anuncio[]; meta: { rowsNumber: number } };
+const { data, refresh, pending } = await useAsyncData<Response>('imoveis', async () => {
+	if (process.client) await new Promise((resolve) => setTimeout(resolve, 500));
+
+	return $fetch('http://localhost:3000/anuncios', {
+		method: 'GET',
+		query: {
+			...pagination.value,
+			...filtro.value,
+		},
+	});
 });
 
-const filtro = ref<Filtro>({
-	max_valor: null,
-	min_valor: null,
-	proposito: null,
-	comodidades: [],
-	subcategoria: [],
-});
+watch(
+	() => pagination.value,
+	() => refresh(),
+	{ deep: true },
+);
 </script>
