@@ -22,8 +22,8 @@
 							style="width: 120px; height: 120px"
 						/>
 						<transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" v-show="isHover[imagem.url]">
-							<div class="absolute-full flex flex-center q-gutter-sm">
-								<q-btn icon="delete" round class="bg-negative text-white" @click.stop="removerImagem(index)" :disable="readonly" />
+							<div class="absolute-full flex flex-center q-gutter-sm" style="background-color: rgba(0, 0, 0, 0.5)">
+								<q-btn icon="delete" round class="text-white" @click.stop="removerImagem(index)" :disable="readonly" />
 							</div>
 						</transition>
 					</q-card>

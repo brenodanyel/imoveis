@@ -15,7 +15,7 @@
 			</div>
 		</div>
 		<div>
-			<img src="/realestate.png" alt="imagem de um prédio" class="w-[40vw] rounded-xl" />
+			<img src="/realestate.png" alt="imagem de um prédio" class="w-[30vw] rounded-xl" />
 		</div>
 	</div>
 </template>

@@ -17,13 +17,13 @@
 							style="width: 200px; height: 200px"
 						/>
 						<transition appear enter-active-class="animated fadeIn" leave-active-class="animated fadeOut" v-show="isHover">
-							<div class="absolute-full flex flex-center q-gutter-sm">
+							<div class="absolute-full flex flex-center q-gutter-sm" style="background-color: rgba(0, 0, 0, 0.5)">
 								<template v-if="!anuncio.thumbnail">
-									<q-btn icon="add" round class="bg-dark text-white" @click="buscarImagem()" :disable="readonly" />
+									<q-btn icon="add" round class="text-white" @click="buscarImagem()" :disable="readonly" />
 								</template>
 								<template v-else>
-									<q-btn icon="edit" round class="bg-primary text-white" @click.stop="buscarImagem()" :disable="readonly" />
-									<q-btn icon="delete" round class="bg-negative text-white" @click.stop="removerImagem()" :disable="readonly" />
+									<q-btn icon="edit" round class="text-white" @click.stop="buscarImagem()" :disable="readonly" />
+									<q-btn icon="delete" round class="text-white" @click.stop="removerImagem()" :disable="readonly" />
 								</template>
 							</div>
 						</transition>

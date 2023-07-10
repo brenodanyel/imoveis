@@ -3,7 +3,7 @@
 		<button
 			v-for="categoria in categorias"
 			:key="categoria.name"
-			class="border p-5 shadow-lg group flex flex-col items-center justify-center gap-3 hover:scale-105 duration-200"
+			class="border p-5 shadow-md group flex flex-col items-center justify-center hover:scale-105 gap-3 duration-200"
 		>
 			<div class="group-hover:bg-blue-500 duration-200 p-3 rounded-full w-12 h-12 flex items-center justify-center">
 				<i class="text-xl duration-200 text-blue-500 group-hover:text-white" :class="categoria.icon" />
