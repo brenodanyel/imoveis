@@ -33,12 +33,14 @@ export class ListarAnunciosUseCase {
 			query.where = { ...query.where, subcategoriaId: { in: data.subcategorias } };
 		}
 
+		query.where.valor = {};
+
 		if (data.min_valor) {
-			query.where = { ...query.where, valor: { gte: data.min_valor * 100 } };
+			query.where.valor = { ...query.where.valor, gte: data.min_valor * 100 };
 		}
 
 		if (data.max_valor) {
-			query.where = { ...query.where, valor: { lte: data.max_valor * 100 } };
+			query.where.valor = { ...query.where.valor, lte: data.max_valor * 100 };
 		}
 
 		if (data.comodidades) {
