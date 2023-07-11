@@ -6,6 +6,14 @@ export default defineNuxtConfig({
 	imports: {
 		dirs: ['types'],
 	},
+	vite: {
+		vue: {
+			script: {
+				defineModel: true,
+				propsDestructure: true,
+			},
+		},
+	},
 	postcss: {
 		plugins: {
 			tailwindcss: {},
