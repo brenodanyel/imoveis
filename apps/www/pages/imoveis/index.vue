@@ -11,12 +11,10 @@
 				<div class="flex items-center gap-2">
 					<i class="bi bi-filter-left"></i>
 					<p class="text-gray-500">Ordenar por:</p>
-
 					<select class="rounded-lg border p-1" v-model="ordenacao">
 						<option v-for="opcao in opcoesOrdenacao" :key="opcao.label" :value="opcao.value">{{ opcao.label }}</option>
 					</select>
 				</div>
-
 				<div class="flex items-center gap-1">
 					<template v-if="data?.meta.rowsNumber">
 						<i class="bi bi-check-circle text-gray-500"></i>

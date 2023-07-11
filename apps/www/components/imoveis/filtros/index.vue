@@ -17,7 +17,7 @@
 		</Expandable>
 
 		<!-- <div class="absolute bottom-5 left-0 w-full"> -->
-		<div class="">
+		<div class="sticky bottom-5 space-y-2">
 			<button
 				class="w-full bg-blue-500 hover:bg-blue-700 duration-200 px-4 py-2 rounded-md text-white font-medium"
 				@click="$emit('apply-filter')"
@@ -34,6 +34,13 @@
 						<i class="bi bi-check-circle"></i>
 						<span>Aplicar filtros</span>
 					</template>
+				</div>
+			</button>
+
+			<button class="w-full bg-neutral-500 hover:bg-neutral-700 duration-200 px-4 py-2 rounded-md font-medium text-white">
+				<div class="flex justify-center items-center gap-2">
+					<i class="bi bi-x-lg"></i>
+					<span>Limpar filtros</span>
 				</div>
 			</button>
 		</div>

@@ -34,11 +34,11 @@ export class ListarAnunciosUseCase {
 		}
 
 		if (data.min_valor) {
-			query.where = { ...query.where, valor: { gte: +data.min_valor } };
+			query.where = { ...query.where, valor: { gte: data.min_valor * 100 } };
 		}
 
 		if (data.max_valor) {
-			query.where = { ...query.where, valor: { lte: +data.max_valor } };
+			query.where = { ...query.where, valor: { lte: data.max_valor * 100 } };
 		}
 
 		if (data.comodidades) {

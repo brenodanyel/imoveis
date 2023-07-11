@@ -6,7 +6,7 @@
 			</div>
 		</div>
 
-		<div class="container mx-auto px-8 flex-grow">
+		<div class="px-8 flex-grow">
 			<NuxtPage />
 		</div>
 
