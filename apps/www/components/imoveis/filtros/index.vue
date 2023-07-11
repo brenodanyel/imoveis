@@ -37,7 +37,7 @@
 				</div>
 			</button>
 
-			<button class="w-full bg-neutral-500 hover:bg-neutral-700 duration-200 px-4 py-2 rounded-md font-medium text-white">
+			<button class="w-full bg-neutral-500 hover:bg-neutral-700 duration-200 px-4 py-2 rounded-md font-medium text-white" @click="$emit('reset')">
 				<div class="flex justify-center items-center gap-2">
 					<i class="bi bi-x-lg"></i>
 					<span>Limpar filtros</span>
@@ -50,7 +50,7 @@
 <script setup lang="ts">
 import { Filtro } from '../../../types/anuncios';
 
-defineEmits(['apply-filter']);
+defineEmits(['apply-filter', 'reset']);
 
 defineProps<{
 	filter: Filtro;

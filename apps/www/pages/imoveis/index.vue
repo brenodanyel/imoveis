@@ -1,7 +1,7 @@
 <template>
 	<div class="flex h-full py-10">
 		<div class="hidden w-1/3 border-r-2 md:block md:px-12">
-			<ImoveisFiltros :filter="filtro" @apply-filter="refresh()" :loading="pending" />
+			<ImoveisFiltros :filter="filtro" @apply-filter="refresh()" :loading="pending" @reset="filtro = { ...initialFilter }" />
 		</div>
 
 		<div class="w-full space-y-2 md:px-12">
@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import useFilterQuery from '../../composables/useFilterQuery';
 import usePaginationQuery from '../../composables/usePaginationQuery';
-import { Anuncio } from '../../types/anuncios';
+import { Anuncio, Filtro } from '../../types/anuncios';
 
 const filterQuery = useFilterQuery();
 const paginationQuery = usePaginationQuery();
@@ -95,15 +95,15 @@ watch(
 	{ deep: true },
 );
 
-const filtro = ref(
-	filterQuery.parseURL({
-		max_valor: null,
-		min_valor: null,
-		proposito: null,
-		comodidades: [],
-		subcategorias: [],
-	}),
-);
+const initialFilter: Filtro = {
+	max_valor: null,
+	min_valor: null,
+	proposito: null,
+	comodidades: [],
+	subcategorias: [],
+};
+
+const filtro = ref(filterQuery.parseURL(initialFilter));
 
 watch(
 	() => filtro.value,

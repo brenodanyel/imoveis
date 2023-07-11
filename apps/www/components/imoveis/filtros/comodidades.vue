@@ -1,7 +1,7 @@
 <template>
 	<ul>
 		<li v-for="comodidade of data" :key="comodidade.id">
-			<label class="flex gap-1 items-center w-fit cursor-pointer select-none">
+			<label class="flex gap-1 items-center cursor-pointer select-none">
 				<input type="checkbox" name="categoria" v-model="filter.comodidades" :value="comodidade.id" />
 				<span>{{ comodidade.nome }}</span>
 			</label>

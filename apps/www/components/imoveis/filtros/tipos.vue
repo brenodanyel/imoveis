@@ -4,7 +4,7 @@
 
 		<ul class="ml-2">
 			<li v-for="subcategoria of categoria.subcategorias" :key="subcategoria.id">
-				<label class="flex gap-1 items-center w-fit cursor-pointer select-none">
+				<label class="flex gap-1 items-center cursor-pointer select-none">
 					<input type="checkbox" name="categoria" v-model="filter.subcategorias" :value="subcategoria.id" />
 					<span>{{ subcategoria.nome }}</span>
 				</label>
