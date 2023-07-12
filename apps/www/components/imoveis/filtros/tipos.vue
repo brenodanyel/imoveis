@@ -27,5 +27,7 @@ type Response = {
 	}[];
 }[];
 
-const { data } = useFetch<Response>('http://localhost:3000/categorias', {});
+const { data } = useFetch<Response>('http://localhost:3000/categorias', {
+	server: true,
+});
 </script>

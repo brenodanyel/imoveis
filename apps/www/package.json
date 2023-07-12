@@ -18,6 +18,8 @@
   },
   "dependencies": {
     "bootstrap-icons": "^1.10.5",
+    "dayjs": "^1.11.9",
+    "swiper": "^10.0.4",
     "vue-currency-input": "^3.0.5"
   }
 }
