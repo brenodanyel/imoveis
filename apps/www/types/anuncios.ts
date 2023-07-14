@@ -29,6 +29,13 @@ export type Anuncio = {
 	caracteristicas: Record<string, number>;
 	comodidades: string[];
 	imagens: { url: string }[];
+
+	empresa: {
+		id: number;
+		nome: string;
+		image: string;
+		phone_number: string;
+	};
 };
 
 export type Filtro = {
