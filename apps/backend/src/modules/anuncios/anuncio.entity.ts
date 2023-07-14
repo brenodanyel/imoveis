@@ -36,6 +36,13 @@ export class AnuncioEntity {
 		url: string;
 	}[];
 
+	empresa: {
+		id: string;
+		nome: string;
+		image: string | null;
+		phone_number: string;
+	};
+
 	constructor(input: any) {
 		this.id = input.id;
 		this.createdAt = input.createdAt;
@@ -74,5 +81,12 @@ export class AnuncioEntity {
 		this.comodidades = input.comodidades.map((comodidade) => comodidade.comodidade.nome);
 
 		this.imagens = input.imagens.map((imagem) => ({ url: imagem.url }));
+
+		this.empresa = {
+			id: input.company.id,
+			nome: input.company.name,
+			image: input.company.image || null,
+			phone_number: input.company.phone_number,
+		};
 	}
 }

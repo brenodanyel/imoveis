@@ -21,6 +21,7 @@ export class ListarAnunciosUseCase {
 				subcategoria: true,
 				comodidades: { include: { comodidade: true } },
 				imagens: true,
+				company: true,
 			},
 			where: {},
 		};

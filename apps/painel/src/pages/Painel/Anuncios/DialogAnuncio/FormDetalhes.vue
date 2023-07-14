@@ -3,29 +3,8 @@
 		<div class="row q-col-gutter-md">
 			<div class="col-xs-12">
 				<div>
-					<SectionHeader title="Detalhes" />
+					<SectionHeader title="Detalhes do imóvel" />
 				</div>
-			</div>
-
-			<div class="col-xs-12">
-				<q-input
-					v-model.trim="anuncio.titulo"
-					label="Titulo do anúncio"
-					:readonly="readonly"
-					:rules="[(v) => v?.length >= 5 || 'O titulo tem que ter pelo menos 5 caracteres.']"
-				/>
-			</div>
-
-			<div class="col-xs-12">
-				<q-input
-					v-model.trim="anuncio.descricao"
-					label="Descrição"
-					type="textarea"
-					:readonly="readonly"
-					stack-label
-					:shadow-text="anuncio.descricao ? '' : 'Insira aqui uma descrição bem detalhada do seu anúncio.'"
-					:rules="[(v) => v?.length >= 10 || 'A descrição tem que ter pelo menos 10 caracteres.']"
-				/>
 			</div>
 
 			<div class="col-xs-12">

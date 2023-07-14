@@ -3,7 +3,7 @@
 		<Title title="Meu perfil" icon="person" />
 
 		<div class="column no-wrap">
-			<q-splitter v-model="NaN" :horizontal="$q.screen.lt.sm">
+			<q-splitter v-model="splitter" unit="%" :horizontal="$q.screen.lt.md">
 				<template v-slot:before>
 					<q-tabs :vertical="!$q.screen.lt.sm" no-caps>
 						<q-route-tab :to="{ name: 'perfil/dados-pessoais' }" label="Dados pessoais" icon="person" />
@@ -34,13 +34,17 @@
 </template>
 
 <script setup lang="ts">
-import Title from '@/pages/Painel/Components/Title.vue';
-
-import { acl } from '@/services/acl';
+import { useQuasar } from 'quasar';
+import { ref } from 'vue';
 
 import { useAuthStore } from '@/boot/stores';
+import Title from '@/pages/Painel/Components/Title.vue';
+import { acl } from '@/services/acl';
 
+const $q = useQuasar();
 const $authStore = useAuthStore();
+
+const splitter = ref(20);
 </script>
 
 <style scoped>

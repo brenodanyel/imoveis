@@ -19,6 +19,7 @@ export class ListarAnuncioUseCase {
 				subcategoria: true,
 				comodidades: { include: { comodidade: true } },
 				imagens: true,
+				company: true,
 			},
 			where: { id: data.id },
 		});

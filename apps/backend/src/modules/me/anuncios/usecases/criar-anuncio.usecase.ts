@@ -31,7 +31,9 @@ export class CriarAnuncioUseCase {
 
 					endereco: { create: data.endereco },
 					subcategoria: { connect: { id: data.subcategoria.id } },
+
 					user: { connect: { id: auth.user.id } },
+					company: { connect: { id: auth.user.company.id } },
 
 					caracteristicas: {
 						create: Object.entries(data.caracteristicas).map(([key, value]) => ({

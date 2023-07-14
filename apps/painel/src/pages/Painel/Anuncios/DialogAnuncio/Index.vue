@@ -26,6 +26,9 @@
 									<div class="col-xs-12 col-md-6">
 										<div class="column q-gutter-md">
 											<div>
+												<FormDescricao :anuncio="anuncio" :readonly="mode === 'view'" />
+											</div>
+											<div>
 												<FormDetalhes :anuncio="anuncio" :readonly="mode === 'view'" />
 											</div>
 											<div>
@@ -72,6 +75,7 @@ import { Anuncio } from '../Anuncio.types';
 import FormCapa from './FormCapa.vue';
 import FormCaracteristicas from './FormCaracteristicas.vue';
 import FormComodidades from './FormComodidades.vue';
+import FormDescricao from './FormDescricao.vue';
 import FormDetalhes from './FormDetalhes.vue';
 import FormEndereco from './FormEndereco.vue';
 import FormImagens from './FormImagens.vue';

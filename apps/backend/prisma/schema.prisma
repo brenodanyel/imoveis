@@ -70,6 +70,7 @@ model Company {
 
   companyPlan    CompanyPlan?
   companyAddress CompanyAddress?
+  anuncios       Anuncio[]
 
   @@map("companies")
 }
@@ -166,6 +167,9 @@ model Anuncio {
 
   userId Int
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  companyId Int
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
   subcategoria   Subcategoria @relation(fields: [subcategoriaId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   subcategoriaId Int
