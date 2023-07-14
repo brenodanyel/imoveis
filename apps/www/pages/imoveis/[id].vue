@@ -1,9 +1,9 @@
 <template>
-	<div class="py-5 lg:w-2/3 mx-auto" v-if="data">
+	<div class="py-5 mx-auto" v-if="data">
 		<div class="space-y-3">
 			<div class="flex flex-col md:flex-row md:items-center gap-3 justify-between">
 				<div class="space-y-1">
-					<p class="text-4xl text-neutral-800 font-medium">{{ data.titulo }}</p>
+					<p class="text-4xl text-neutral-800 font-medium first-letter:capitalize">{{ data.titulo }}</p>
 					<p class="text-xl text-neutral-800">{{ data.endereco.bairro }} - {{ data.endereco.cidade }}/{{ data.endereco.estado }}</p>
 					<p class="text-sm text-neutral-800">Publicado em {{ dayjs(data.createdAt).format('DD/MM/YYYY [às] HH[h]:MM') }}</p>
 				</div>
@@ -46,7 +46,7 @@
 						</p>
 					</div>
 
-					<div class="space-y-1 border-b pb-5">
+					<div class="space-y-1 border-b pb-5" v-if="data.descricao">
 						<p class="text-2xl text-neutral-800 font-medium">Descrição</p>
 						<ClientOnly>
 							<p class="text-neutral-800" v-html="data.descricao"></p>
@@ -81,7 +81,7 @@
 						</p>
 					</div>
 
-					<div class="space-y-1">
+					<div class="space-y-1" v-if="data.comodidades.length">
 						<p class="text-2xl text-neutral-800 font-medium">Comodidades</p>
 						<div class="grid grid-cols-1 xl:grid-cols-2 gap-x-5">
 							<div class="text-neutral-800 flex gap-2" v-for="comodidade of data.comodidades" :key="comodidade">
@@ -127,6 +127,21 @@
 			<ImoveisSwiper v-if="dialog" @hide="dialog = false" :images="images" :initialSlide="initialSlide" />
 		</ClientOnly>
 	</div>
+
+	<template v-else>
+		<div class="flex-1 flex flex-col items-center justify-center p-10">
+			<i class="bi bi-exclamation-triangle text-9xl text-neutral-800"></i>
+			<p class="text-3xl text-neutral-800 font-medium">Imóvel não encontrado</p>
+			<p class="text-xl text-neutral-800">O imóvel que você está procurando não existe ou foi removido.</p>
+
+			<div class="mt-10">
+				<RouterLink to="/imoveis" class="text-xl text-white bg-blue-400 hover:bg-blue-700 px-4 py-2 rounded-md font-medium duration-200">
+					<i class="bi bi-arrow-left"></i>
+					Voltar para a lista de imoveis
+				</RouterLink>
+			</div>
+		</div>
+	</template>
 </template>
 
 <script setup lang="ts">

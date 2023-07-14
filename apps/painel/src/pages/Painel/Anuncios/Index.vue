@@ -41,9 +41,30 @@
 						{ label: 'Tipo', align: 'left', name: 'tipo', field: (item: Anuncio) => item.subcategoria.nome, sortable: true, style: 'width: 15%' },
 						{ label: 'Propósito', align: 'left', name: 'proposito', field: (item: Anuncio) => item.proposito, sortable: true, style: 'width: 10%' },
 
-						{ label: 'Valor', align: 'left', name: 'valor', field: (item: Anuncio) => formatCurrency(item.valor / 100), sortable: true, style: 'width: 10%' },
-						{ label: 'IPTU', align: 'left', name: 'valor_iptu', field: (item: Anuncio) => formatCurrency(item.valor_iptu / 100), sortable: true, style: 'width: 10%' },
-						{ label: 'Condominio', align: 'left', name: 'valor_condominio', field: (item: Anuncio) => formatCurrency(item.valor_condominio / 100), sortable: true, style: 'width: 10%' },
+						{
+							label: 'Valor',
+							align: 'left',
+							name: 'valor',
+							field: (item: Anuncio) => formatCurrency(item.valor / 100),
+							sortable: true,
+							style: 'width: 10%',
+						},
+						{
+							label: 'IPTU',
+							align: 'left',
+							name: 'valor_iptu',
+							field: (item: Anuncio) => formatCurrency(item.valor_iptu / 100),
+							sortable: true,
+							style: 'width: 10%',
+						},
+						{
+							label: 'Condominio',
+							align: 'left',
+							name: 'valor_condominio',
+							field: (item: Anuncio) => formatCurrency(item.valor_condominio / 100),
+							sortable: true,
+							style: 'width: 10%',
+						},
 					]"
 					wrap-cells
 					table-header-class="bg-primary text-white"
@@ -142,8 +163,8 @@ async function onClickCreate() {
 			mode: 'create',
 			loading: false,
 			_anuncio: {
-				titulo: undefined,
-				descricao: undefined,
+				titulo: '',
+				descricao: '',
 				valor: undefined,
 				valor_condominio: undefined,
 				valor_iptu: undefined,

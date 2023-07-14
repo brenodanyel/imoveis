@@ -1,10 +1,10 @@
 <template>
 	<div class="flex h-full py-10">
-		<div class="hidden w-1/3 border-r-2 md:block md:px-12">
+		<div class="hidden w-1/3 border-r-2 md:block md:pr-12">
 			<ImoveisFiltros :filter="filtro" @apply-filter="refresh()" :loading="pending" @reset="filtro = { ...initialFilter }" />
 		</div>
 
-		<div class="w-full space-y-2 md:px-12">
+		<div class="w-full space-y-2 md:pl-12">
 			<p class="text-3xl font-bold text-gray-800">Imóveis:</p>
 
 			<div class="flex flex-wrap justify-between gap-2">
@@ -27,7 +27,7 @@
 				</div>
 			</div>
 
-			<div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3" v-if="data?.data">
+			<div class="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-3" v-if="data?.data?.length">
 				<RouterLink
 					class="h-96 overflow-hidden rounded-lg border text-left shadow-md duration-200 hover:scale-[1.01]"
 					:to="`/imoveis/${imovel.id}`"
@@ -47,6 +47,10 @@
 						</div>
 					</div>
 				</RouterLink>
+			</div>
+
+			<div v-else>
+				<p class="text-gray-500">Nenhum imóvel encontrado com os filtros selecionados</p>
 			</div>
 		</div>
 	</div>

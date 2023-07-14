@@ -1,8 +1,8 @@
 <template>
-	<footer class="p-10 bg-gray-100 grid grid-cols-1 md:grid-cols-3 gap-10">
+	<footer class="py-10 grid grid-cols-1 md:grid-cols-3 gap-10">
 		<div class="space-y-2">
 			<h3 class="text-2xl font-bold">Imóveis</h3>
-			<p class="text-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
+			<p class="text-gray-500">Descubra um novo horizonte de possibilidades - seu novo imóvel está esperando!</p>
 
 			<div>
 				<div class="flex items-center gap-3 text-gray-500">
