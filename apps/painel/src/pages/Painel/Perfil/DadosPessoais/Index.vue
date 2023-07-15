@@ -37,7 +37,7 @@
 					/>
 				</div>
 				<div class="col-xs-12">
-					<q-input label="E-mail" v-model.trim="user.email" :rules="[(v) => isEmail(v) || 'E-mail Inválido.']" :readonly="readonly" />
+					<q-input label="E-mail" v-model.trim="user.email" :rules="[(v) => isEmail(v) || 'E-mail Inválido.']" readonly />
 				</div>
 				<div class="col-xs-12 col-md-auto">
 					<q-btn label="Alterar senha" icon="lock_reset" class="bg-primary text-white full-width" @click="onClickChangePassword()" />
@@ -58,7 +58,7 @@ import Title from '@/pages/Painel/Components/Title.vue';
 import { api } from '@/services/api';
 import { HttpException } from '@/services/http-exception';
 
-import { useAuthStore, User } from '@/boot/stores';
+import { useAuthStore } from '@/boot/stores';
 
 import DialogTrocaDeSenha from './DialogTrocaDeSenha.vue';
 

@@ -17,7 +17,7 @@
 		</Expandable>
 
 		<!-- <div class="absolute bottom-5 left-0 w-full"> -->
-		<div class="sticky bottom-5 space-y-2">
+		<div class="sticky bottom-5 space-y-2 p-5">
 			<button
 				class="w-full bg-blue-500 hover:bg-blue-700 duration-200 px-4 py-2 rounded-md text-white font-medium"
 				@click="$emit('apply-filter')"

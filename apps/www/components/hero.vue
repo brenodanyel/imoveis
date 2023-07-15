@@ -1,9 +1,12 @@
 <template>
 	<div class="flex flex-col-reverse items-center justify-center gap-16 md:flex-row">
 		<div class="space-y-2 md:w-1/2">
-			<h1 class="text-center text-5xl font-bold text-gray-800 md:text-left">Imóveis</h1>
+			<h1 class="text-center text-5xl font-bold text-gray-800 md:text-left">Encontre seu lar dos sonhos hoje mesmo!</h1>
 
-			<p class="text-center text-xl text-gray-600 md:text-left">Seu lar perfeito está aqui! Explore nossa ampla seleção de imóveis e encontre o espaço que combina com seu estilo de vida. Comece uma nova jornada rumo à felicidade!</p>
+			<p class="text-center text-xl text-gray-600 md:text-left">
+				Seu lar perfeito está aqui! Explore nossa ampla seleção de imóveis e encontre o espaço que combina com seu estilo de vida. Comece uma nova
+				jornada rumo à felicidade!
+			</p>
 
 			<div class="flex justify-center gap-2 md:justify-start">
 				<RouterLink :to="{ path: '/imoveis', query: { proposito: 'Venda' } }">

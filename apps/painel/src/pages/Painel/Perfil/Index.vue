@@ -44,7 +44,7 @@ import { acl } from '@/services/acl';
 const $q = useQuasar();
 const $authStore = useAuthStore();
 
-const splitter = ref(20);
+const splitter = ref(15);
 </script>
 
 <style scoped>

@@ -1,21 +1,15 @@
 <template>
-	<div class="min-h-screen flex flex-col justify-between">
+	<div class="min-h-screen flex flex-col justify-between font-sans antialiased">
 		<div class="border-b">
-			<div class="container px-8 mx-auto">
-				<MyHeader />
-			</div>
+			<MyHeader class="container px-8 mx-auto" />
 		</div>
 
 		<div class="px-8 flex-grow flex flex-col">
-			<div class="container px-8 mx-auto">
-				<NuxtPage />
-			</div>
+			<NuxtPage class="container px-8 mx-auto" />
 		</div>
 
-		<div class="border-t bg-gray-100">
-			<div class="container px-8 mx-auto">
-				<MyFooter class="mt-auto" />
-			</div>
+		<div class="border-t bg-gray-100 mt-auto">
+			<MyFooter class="container px-8 mx-auto" />
 		</div>
 	</div>
 </template>

@@ -34,10 +34,13 @@
 					v-for="imovel in data.data"
 					:key="imovel.id"
 				>
-					<img :src="imovel.thumbnail" alt="imagem imovel" class="h-[60%] w-full object-cover" />
+					<img :src="imovel.thumbnail" alt="imagem imóvel" class="h-[60%] w-full object-cover" />
 					<div class="space-y-1 p-3">
-						<p class="uppercase text-blue-500">{{ imovel.proposito }}</p>
-						<p class="font-medium">{{ imovel.subcategoria.nome }}</p>
+						<div class="flex justify-between gap-3">
+							<p class="uppercase text-blue-500">{{ imovel.proposito }}</p>
+							<p class="text-gray-500">{{ imovel.subcategoria.nome }}</p>
+						</div>
+						<p class="font-medium first-letter:capitalize text-ellipsis whitespace-nowrap overflow-hidden">{{ imovel.titulo }}</p>
 						<p class="text-sm text-gray-500">{{ imovel.endereco.bairro }} ({{ imovel.endereco.cidade }})</p>
 						<div class="flex items-center gap-1">
 							<i class="bi bi-cash-stack text-gray-500"></i>
