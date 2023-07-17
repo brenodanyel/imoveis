@@ -20,9 +20,5 @@ type Response = {
 	nome: string;
 }[];
 
-const { data } = useFetch<Response>('/comodidade', {
-	baseURL: config.public.baseURL,
-	server: true,
-	mode: 'no-cors',
-});
+const { data } = useFetch<Response>('/comodidade', { baseURL: config.public.baseURL });
 </script>

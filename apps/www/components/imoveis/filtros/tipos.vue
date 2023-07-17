@@ -28,9 +28,5 @@ type Response = {
 	}[];
 }[];
 
-const { data } = useFetch<Response>('/categorias', {
-	baseURL: config.public.baseURL,
-	server: true,
-	mode: 'no-cors',
-});
+const { data } = useFetch<Response>('/categorias', { baseURL: config.public.baseURL });
 </script>
