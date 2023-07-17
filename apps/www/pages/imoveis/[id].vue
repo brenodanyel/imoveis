@@ -147,12 +147,13 @@
 <script setup lang="ts">
 import dayjs from 'dayjs';
 import { Anuncio } from '../../types/anuncios';
+const config = useRuntimeConfig();
 
 // @ts-ignore
 import StringMask from 'string-mask';
 
 const route = useRoute();
-const { data } = useFetch<Anuncio>(`http://localhost:3000/anuncios/${route.params.id}`);
+const { data } = useFetch<Anuncio>(`${config.public.baseURL}/anuncios/${route.params.id}`);
 
 function getWhatsappLink() {
 	if (!data.value) return '';

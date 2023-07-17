@@ -15,6 +15,7 @@
 
 <script setup lang="ts">
 import { Filtro } from '../../../types/anuncios';
+const config = useRuntimeConfig();
 
 defineProps<{ filter: Filtro }>();
 
@@ -27,7 +28,7 @@ type Response = {
 	}[];
 }[];
 
-const { data } = useFetch<Response>('http://localhost:3000/categorias', {
+const { data } = useFetch<Response>(`${config.public.baseURL}/categorias`, {
 	server: true,
 });
 </script>

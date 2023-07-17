@@ -66,6 +66,7 @@ import { Anuncio, Filtro } from '../../types/anuncios';
 
 const filterQuery = useFilterQuery();
 const paginationQuery = usePaginationQuery();
+const config = useRuntimeConfig();
 
 const pagination = ref(
 	paginationQuery.parseURL({
@@ -122,7 +123,7 @@ type Response = { data: Anuncio[]; meta: { rowsNumber: number } };
 const { data, refresh, pending } = await useAsyncData<Response>('imoveis', async () => {
 	if (process.client) await new Promise((resolve) => setTimeout(resolve, 500));
 
-	return $fetch('http://localhost:3000/anuncios', {
+	return $fetch(`${config.public.baseURL}/anuncios/`, {
 		method: 'GET',
 		query: {
 			...pagination.value,

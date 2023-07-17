@@ -11,6 +11,7 @@
 
 <script setup lang="ts">
 import { Filtro } from '../../../types/anuncios';
+const config = useRuntimeConfig();
 
 defineProps<{ filter: Filtro }>();
 
@@ -19,5 +20,5 @@ type Response = {
 	nome: string;
 }[];
 
-const { data } = useFetch<Response>('http://localhost:3000/comodidade', {});
+const { data } = useFetch<Response>(`${config.public.baseURL}/comodidade`, {});
 </script>
