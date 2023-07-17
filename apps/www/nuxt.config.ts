@@ -3,7 +3,15 @@ export default defineNuxtConfig({
 	pages: true,
 	runtimeConfig: {
 		public: {
-			baseURL: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://imoveis-backend.vercel.app/',
+			...(process.env.NODE_ENV === 'production'
+				? {
+						baseURL: 'https://imoveis-backend.vercel.app/',
+						painelURL: 'https://imoveis-painel.vercel.app/',
+				  }
+				: {
+						baseURL: 'http://localhost:3000',
+						painelURL: 'http://localhost:5173',
+				  }),
 		},
 	},
 	devtools: { enabled: false },

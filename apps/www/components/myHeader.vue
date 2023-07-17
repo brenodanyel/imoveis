@@ -15,16 +15,20 @@
 			<button type="button" class="text-blue-500 hover:text-blue-700 px-5 py-2 font-medium rounded-md duration-200">
 				<div class="space-x-2 flex items-center">
 					<i class="bi bi-person-fill text-xl"></i>
-					<a href="http://localhost:5173/login" target="_blank">Login</a>
+					<a :href="`${config.public.painelURL}/login`" target="_blank">Login</a>
 				</div>
 			</button>
 
 			<button type="button" class="bg-blue-500 hover:bg-blue-700 text-white px-5 py-2 font-medium rounded-md duration-200">
 				<div class="space-x-2 flex items-center">
 					<i class="bi bi-plus text-xl"></i>
-					<a href="http://localhost:5173/cadastro" target="_blank">Crie um anúncio</a>
+					<a :href="`${config.public.painelURL}/cadastro`" target="_blank">Crie um anúncio</a>
 				</div>
 			</button>
 		</div>
 	</header>
 </template>
+
+<script setup lang="ts">
+const config = useRuntimeConfig();
+</script>
