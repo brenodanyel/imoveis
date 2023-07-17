@@ -125,7 +125,6 @@ const { data, refresh, pending } = await useAsyncData<Response>('imoveis', async
 
 	return $fetch('/anuncios/', {
 		baseURL: config.public.baseURL,
-		mode: 'no-cors',
 		method: 'GET',
 		query: {
 			...pagination.value,
