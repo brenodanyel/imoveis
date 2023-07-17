@@ -12,19 +12,23 @@
 		</nav>
 
 		<div class="space-x-2">
-			<button type="button" class="text-blue-500 hover:text-blue-700 px-5 py-2 font-medium rounded-md duration-200">
-				<div class="space-x-2 flex items-center">
-					<i class="bi bi-person-fill text-xl"></i>
-					<a :href="`${config.public.painelURL}/login`" target="_blank">Login</a>
-				</div>
-			</button>
+			<a :href="`${config.public.painelURL}/login`" target="_blank">
+				<button type="button" class="text-blue-500 hover:text-blue-700 px-5 py-2 font-medium rounded-md duration-200">
+					<div class="space-x-2 flex items-center">
+						<i class="bi bi-person-fill text-xl"></i>
+						<span>Login</span>
+					</div>
+				</button>
+			</a>
 
-			<button type="button" class="bg-blue-500 hover:bg-blue-700 text-white px-5 py-2 font-medium rounded-md duration-200">
-				<div class="space-x-2 flex items-center">
-					<i class="bi bi-plus text-xl"></i>
-					<a :href="`${config.public.painelURL}/cadastro`" target="_blank">Crie um anúncio</a>
-				</div>
-			</button>
+			<a :href="`${config.public.painelURL}/cadastro`" target="_blank">
+				<button type="button" class="bg-blue-500 hover:bg-blue-700 text-white px-5 py-2 font-medium rounded-md duration-200">
+					<div class="space-x-2 flex items-center">
+						<i class="bi bi-plus text-xl"></i>
+						<span>Crie um anúncio</span>
+					</div>
+				</button>
+			</a>
 		</div>
 	</header>
 </template>
