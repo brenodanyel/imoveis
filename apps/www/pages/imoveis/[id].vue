@@ -153,7 +153,11 @@ const config = useRuntimeConfig();
 import StringMask from 'string-mask';
 
 const route = useRoute();
-const { data } = useFetch<Anuncio>(`${config.public.baseURL}/anuncios/${route.params.id}`);
+const { data } = useFetch<Anuncio>(`/anuncios/${route.params.id}`, {
+	baseURL: config.public.baseURL,
+	server: true,
+	mode: 'no-cors',
+});
 
 function getWhatsappLink() {
 	if (!data.value) return '';

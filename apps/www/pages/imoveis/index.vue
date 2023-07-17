@@ -123,7 +123,9 @@ type Response = { data: Anuncio[]; meta: { rowsNumber: number } };
 const { data, refresh, pending } = await useAsyncData<Response>('imoveis', async () => {
 	if (process.client) await new Promise((resolve) => setTimeout(resolve, 500));
 
-	return $fetch(`${config.public.baseURL}/anuncios/`, {
+	return $fetch('/anuncios/', {
+		baseURL: config.public.baseURL,
+		mode: 'no-cors',
 		method: 'GET',
 		query: {
 			...pagination.value,
