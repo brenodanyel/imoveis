@@ -83,7 +83,7 @@
 									<q-btn icon="edit" dense round class="text-primary" @click="onClickEdit(props.row)">
 										<q-tooltip>Editar</q-tooltip>
 									</q-btn>
-									<a :href="`http://localhost:3001/imoveis/${props.row.id}`" target="_blank">
+									<a :href="`https://imoveis-nu.vercel.app/imoveis/${props.row.id}`" target="_blank">
 										<q-btn icon="visibility" dense round class="text-primary">
 											<q-tooltip>Visualizar</q-tooltip>
 										</q-btn>

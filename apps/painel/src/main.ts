@@ -1,4 +1,5 @@
 import { inject } from '@vercel/analytics';
+import 'dotenv/config';
 import { createApp } from 'vue';
 
 import App from './App.vue';
