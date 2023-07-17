@@ -44,13 +44,13 @@ export const useAuthStore = defineStore('auth', {
 				return false;
 			}
 
-			localStorage.setItem('sucatech:token', data.token);
+			localStorage.setItem('imoveis:token', data.token);
 
 			return this.validateToken();
 		},
 
 		async validateToken() {
-			const token = localStorage.getItem('sucatech:token');
+			const token = localStorage.getItem('imoveis:token');
 
 			if (!token) {
 				return false;
@@ -66,15 +66,15 @@ export const useAuthStore = defineStore('auth', {
 			this.user = data.user;
 			this.roles = data.roles;
 
-			localStorage.setItem('sucatech:user', JSON.stringify(data.user));
+			localStorage.setItem('imoveis:user', JSON.stringify(data.user));
 			localStorage.setItem('sucatech:roles', JSON.stringify(data.roles));
 
 			return true;
 		},
 
 		logout() {
-			localStorage.removeItem('sucatech:token');
-			localStorage.removeItem('sucatech:user');
+			localStorage.removeItem('imoveis:token');
+			localStorage.removeItem('imoveis:user');
 			localStorage.removeItem('sucatech:roles');
 			this.user = null;
 			this.roles = [];
@@ -88,7 +88,7 @@ export const useAuthStore = defineStore('auth', {
 				return false;
 			}
 
-			localStorage.setItem('sucatech:token', data.token);
+			localStorage.setItem('imoveis:token', data.token);
 
 			return this.validateToken();
 		},

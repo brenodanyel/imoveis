@@ -9,7 +9,7 @@ import { useAuthStore } from './stores';
 export const router = createRouter({
 	history: createWebHistory(),
 	routes: [
-		{ path: '', redirect: (e) => (localStorage.getItem('sucatech:token') ? { name: 'inicio' } : { name: 'login' }) },
+		{ path: '', redirect: (e) => (localStorage.getItem('imoveis:token') ? { name: 'inicio' } : { name: 'login' }) },
 		{ path: '/login', name: 'login', component: () => import('@/pages/Login.vue') },
 		{ path: '/cadastro', name: 'cadastro', component: () => import('@/pages/Cadastro.vue') },
 		{
@@ -120,12 +120,12 @@ router.beforeEach(async (to, from, next) => {
 	try {
 		const authStore = useAuthStore();
 
-		if (!localStorage.getItem('sucatech:token')) {
+		if (!localStorage.getItem('imoveis:token')) {
 			throw new Error('Sessão expirada!');
 		}
 
 		if (!authStore.user) {
-			const localStorageUser = localStorage.getItem('sucatech:user');
+			const localStorageUser = localStorage.getItem('imoveis:user');
 			const localStorageRoles = localStorage.getItem('sucatech:roles');
 
 			const storedUser = localStorageUser && JSON.parse(localStorageUser);

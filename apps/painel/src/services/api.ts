@@ -1,16 +1,16 @@
-import axios, { AxiosInstance } from 'axios';
+import axios from 'axios';
 
 import { useAuthStore } from '@/boot/stores';
 
 import { router } from '../boot/router';
 
 export const api = axios.create({
-	baseURL: import.meta.env.DEV ? 'http://localhost:3000' : 'https://sucatech-backend.vercel.app/',
+	baseURL: import.meta.env.DEV ? 'http://localhost:3000' : 'https://imoveis-backend.vercel.app/',
 	validateStatus: () => true,
 });
 
 api.interceptors.request.use((request) => {
-	const token = localStorage.getItem('sucatech:token');
+	const token = localStorage.getItem('imoveis:token');
 
 	if (token) {
 		request.headers.Authorization = `Bearer ${token}`;
