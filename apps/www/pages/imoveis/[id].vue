@@ -105,7 +105,7 @@
 
 						<div>
 							<div class="text-2xl text-neutral-800 font-medium">{{ data.empresa.nome }}</div>
-							<div v-if="data.empresa.phone_number">{{ new StringMask('(00) 00000-0000').apply(data.empresa.phone_number) }}</div>
+							<div v-if="data.empresa.phone_number">{{ data.empresa.phone_number }}</div>
 						</div>
 
 						<ClientOnly>
@@ -148,9 +148,6 @@
 import dayjs from 'dayjs';
 import { Anuncio } from '../../types/anuncios';
 const config = useRuntimeConfig();
-
-// @ts-ignore
-import StringMask from 'string-mask';
 
 const route = useRoute();
 const { data } = useFetch<Anuncio>(`/anuncios/${route.params.id}`, {
