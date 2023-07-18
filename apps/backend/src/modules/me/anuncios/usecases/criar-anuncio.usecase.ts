@@ -54,7 +54,7 @@ export class CriarAnuncioUseCase {
 			const bucket = this.configService.getOrThrow('USE_AWS_S3_BUCKET');
 
 			if (data.thumbnail?.includes(tempBucket)) {
-				await this.storageService.moveFile(data.thumbnail, tempBucket, bucket);
+				this.storageService.moveFile(data.thumbnail, tempBucket, bucket);
 
 				await trx.anuncio.update({
 					where: { id: anuncio.id },
@@ -66,7 +66,7 @@ export class CriarAnuncioUseCase {
 
 			for (const imagem of data.imagens) {
 				if (imagem.url.includes(tempBucket)) {
-					await this.storageService.moveFile(imagem.url, tempBucket, bucket);
+					this.storageService.moveFile(imagem.url, tempBucket, bucket);
 				}
 			}
 

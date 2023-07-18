@@ -70,12 +70,12 @@ export class AtualizarAnuncioUseCase {
 			}
 
 			if (!data.thumbnail && anuncio.thumbnail) {
-				await this.storageService.deleteFile(anuncio.thumbnail, bucket);
+				this.storageService.deleteFile(anuncio.thumbnail, bucket);
 			}
 
 			for (const imagem of data.imagens) {
 				if (imagem.url.includes(tempBucket)) {
-					await this.storageService.moveFile(imagem.url, tempBucket, bucket);
+					this.storageService.moveFile(imagem.url, tempBucket, bucket);
 				}
 			}
 
@@ -83,7 +83,7 @@ export class AtualizarAnuncioUseCase {
 
 			for (const previousImage of previousImages) {
 				if (!data.imagens.find((imagem) => imagem.url === previousImage.url)) {
-					await this.storageService.deleteFile(previousImage.url, bucket);
+					this.storageService.deleteFile(previousImage.url, bucket);
 				}
 			}
 
