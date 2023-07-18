@@ -155,8 +155,10 @@ import StringMask from 'string-mask';
 const route = useRoute();
 const { data } = useFetch<Anuncio>(`/anuncios/${route.params.id}`, {
 	baseURL: config.public.baseURL,
-	server: true,
-	mode: 'no-cors',
+});
+
+useHead({
+	title: data.value?.titulo || 'Imóvel não encontrado',
 });
 
 function getWhatsappLink() {

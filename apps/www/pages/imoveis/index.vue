@@ -64,6 +64,10 @@ import useFilterQuery from '../../composables/useFilterQuery';
 import usePaginationQuery from '../../composables/usePaginationQuery';
 import { Anuncio, Filtro } from '../../types/anuncios';
 
+useHead({
+	title: 'Imóveis',
+});
+
 const filterQuery = useFilterQuery();
 const paginationQuery = usePaginationQuery();
 const config = useRuntimeConfig();
