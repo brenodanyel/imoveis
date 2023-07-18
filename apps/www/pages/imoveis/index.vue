@@ -124,9 +124,7 @@ watch(
 );
 
 type Response = { data: Anuncio[]; meta: { rowsNumber: number } };
-const { data, refresh, pending } = await useAsyncData<Response>('imoveis', async () => {
-	if (process.client) await new Promise((resolve) => setTimeout(resolve, 500));
-
+const { data, refresh, pending } = await useLazyAsyncData<Response>('imoveis', async () => {
 	return $fetch('/anuncios/', {
 		baseURL: config.public.baseURL,
 		method: 'GET',

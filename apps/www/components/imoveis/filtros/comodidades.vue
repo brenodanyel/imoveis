@@ -20,5 +20,5 @@ type Response = {
 	nome: string;
 }[];
 
-const { data } = useFetch<Response>('/comodidade', { baseURL: config.public.baseURL });
+const { data } = useLazyFetch<Response>('/comodidade', { baseURL: config.public.baseURL });
 </script>

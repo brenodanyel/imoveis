@@ -150,7 +150,7 @@ import { Anuncio } from '../../types/anuncios';
 const config = useRuntimeConfig();
 
 const route = useRoute();
-const { data } = useFetch<Anuncio>(`/anuncios/${route.params.id}`, {
+const { data } = useLazyFetch<Anuncio>(`/anuncios/${route.params.id}`, {
 	baseURL: config.public.baseURL,
 });
 
