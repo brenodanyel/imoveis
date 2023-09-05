@@ -55,9 +55,9 @@ const { isLoading, data, refetch } = useQuery<Role[]>('select-roles', async () =
 	return data.data;
 });
 
-function buscarRoles(str: string, update: any, abort: any) {
-	if (str.trim().length < 2) return abort();
+function buscarRoles(str: string, update: any) {
+	if (str.trim().length < 2) return update();
 	filter.value = str;
-	refetch.value().then(update).catch(abort);
+	refetch.value().then(update).catch(update);
 }
 </script>
