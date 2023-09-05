@@ -23,9 +23,7 @@
 				</template>
 				<template v-slot:after>
 					<router-view v-slot="{ Component }">
-						<transition name="fade" mode="out-in">
-							<component :is="Component" />
-						</transition>
+						<component :is="Component" />
 					</router-view>
 				</template>
 			</q-splitter>
@@ -46,15 +44,3 @@ const $authStore = useAuthStore();
 
 const splitter = ref(15);
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-	transition: 100ms ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-	opacity: 0;
-}
-</style>
