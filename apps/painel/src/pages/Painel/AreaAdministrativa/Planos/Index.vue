@@ -1,5 +1,5 @@
 <template>
-	<q-form class="column q-gutter-sm no-wrap" @submit.prevent="buscarPlanos()">
+	<q-form class="column q-gutter-sm no-wrap" @submit.prevent="refetch()">
 		<div>
 			<div class="row q-col-gutter-sm">
 				<div class="col-xs-12 col-md-8">
@@ -18,7 +18,7 @@
 		<div>
 			<div class="row q-col-gutter-sm justify-between">
 				<div class="col-xs-12 col-sm-auto">
-					<q-btn label="Buscar" icon="search" class="bg-positive text-white full-width" type="submit" :loading="loading" />
+					<q-btn label="Buscar" icon="search" class="bg-positive text-white full-width" type="submit" :loading="isLoading" />
 				</div>
 
 				<div class="col-xs-12 col-sm-auto">
@@ -35,7 +35,7 @@
 
 		<div>
 			<q-table
-				:rows="planos"
+				:rows="data"
 				:columns="[
 					{ label: 'Ações', align: 'center', name: 'actions', field: (item) => item, style: 'width: 10%' },
 					{ label: '#', align: 'left', name: 'id', field: (item) => item.id, sortable: true, style: 'width: 10%' },
@@ -62,9 +62,9 @@
 				table-header-class="bg-primary text-white"
 				v-model:pagination="pagination"
 				row-key="id"
-				@update:pagination="(pagination) => buscarPlanos({ pagination })"
-				@request="buscarPlanos"
-				:loading="loading"
+				@update:pagination="(pagination) => syncPagination({ pagination })"
+				@request="refetch()"
+				:loading="isLoading"
 				:rows-per-page-options="[5, 10, 25, 50, 100]"
 				binary-state-sort
 			>
@@ -73,11 +73,11 @@
 						<div class="row q-gutter-xs flex-center no-wrap">
 							<div v-if="acl.hasPermission('area-administrativa.planos.edit')">
 								<q-btn icon="edit" dense round class="text-primary" @click="onClickEdit(props.row)" />
-								<q-tooltip> Editar </q-tooltip>
+								<q-tooltip>Editar</q-tooltip>
 							</div>
 							<div>
 								<q-btn icon="visibility" dense round class="text-primary" @click="onClickView(props.row)" />
-								<q-tooltip> Visualizar </q-tooltip>
+								<q-tooltip>Visualizar</q-tooltip>
 							</div>
 						</div>
 					</td>
@@ -99,6 +99,7 @@ import { ativoInativoOptions } from '@/services/constants';
 import { HttpException } from '@/services/http-exception';
 import { parsePaginationFromQueryUrl, syncPaginationWithQueryUrl } from '@/services/sync-pagination-with-query-url';
 
+import { useQuery } from 'vue-query';
 import DialogPlano from './DialogPlano.vue';
 import { Plano } from './Plano.types';
 
@@ -109,8 +110,6 @@ const filter = reactive({
 	ativo: true,
 });
 
-const planos = ref<Plano[]>([]);
-const loading = ref(false);
 const pagination = ref(
 	parsePaginationFromQueryUrl({
 		sortBy: 'id',
@@ -123,14 +122,9 @@ const pagination = ref(
 watch(() => pagination.value, syncPaginationWithQueryUrl, { deep: true });
 
 const abortController = ref(new AbortController());
+onUnmounted(() => abortController.value.abort());
 
-async function buscarPlanos(props?: any) {
-	loading.value = true;
-
-	if (props?.pagination) {
-		pagination.value = { ...pagination.value, ...props.pagination };
-	}
-
+const { isLoading, data, refetch } = useQuery<Plano[]>('area-admin-planos', async () => {
 	const { status, data } = await api.get('/plan', {
 		params: {
 			filter: filter.search,
@@ -140,18 +134,20 @@ async function buscarPlanos(props?: any) {
 		signal: abortController.value.signal,
 	});
 
-	loading.value = false;
-
 	if (status !== 200) {
 		HttpException(data);
 		return;
 	}
 
-	planos.value = data.data;
 	pagination.value.rowsNumber = data.meta.rowsNumber;
-}
 
-onUnmounted(() => abortController.value.abort());
+	return data.data;
+});
+
+function syncPagination(props?: any) {
+	if (props?.pagination) pagination.value = { ...pagination.value, ...props.pagination };
+	return refetch.value();
+}
 
 function onClickEdit(_plano: Plano) {
 	const dialog = $q
@@ -175,7 +171,7 @@ function onClickEdit(_plano: Plano) {
 				return;
 			}
 
-			await buscarPlanos();
+			await refetch.value();
 
 			$q.notify({ message: 'Plano editada com sucesso!', type: 'positive' });
 
@@ -222,7 +218,7 @@ function onClickCreate() {
 				return;
 			}
 
-			await buscarPlanos();
+			await refetch.value();
 
 			$q.notify({ message: 'Plano criada com sucesso!', type: 'positive' });
 

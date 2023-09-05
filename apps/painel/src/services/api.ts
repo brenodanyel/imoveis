@@ -9,12 +9,14 @@ export const api = axios.create({
 	validateStatus: () => true,
 });
 
-api.interceptors.request.use((request) => {
+api.interceptors.request.use(async (request) => {
 	const token = localStorage.getItem('imoveis:token');
 
 	if (token) {
 		request.headers.Authorization = `Bearer ${token}`;
 	}
+
+	// await new Promise((resolve) => setTimeout(resolve, 1000));
 
 	return request;
 });

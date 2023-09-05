@@ -1,5 +1,5 @@
 <template>
-	<q-form class="column q-gutter-sm no-wrap" @submit.prevent="buscarEmpresas()">
+	<q-form class="column q-gutter-sm no-wrap" @submit.prevent="refetch()">
 		<div>
 			<div class="row q-col-gutter-sm">
 				<div class="col-xs-12 col-md-7">
@@ -18,7 +18,7 @@
 		<div>
 			<div class="row q-col-gutter-sm justify-between">
 				<div class="col-xs-12 col-sm-auto">
-					<q-btn label="Buscar" icon="search" class="bg-positive text-white full-width" type="submit" :loading="loading" />
+					<q-btn label="Buscar" icon="search" class="bg-positive text-white full-width" type="submit" :loading="isLoading" />
 				</div>
 
 				<div class="col-xs-12 col-sm-auto">
@@ -29,7 +29,7 @@
 
 		<div>
 			<q-table
-				:rows="empresas"
+				:rows="data"
 				:columns="[
 					{ label: 'Ações', align: 'center', name: 'actions', field: (item) => item, style: 'width: 10%' },
 					{ label: '#', align: 'left', name: 'id', field: (item) => item.id, sortable: true, style: 'width: 10%' },
@@ -41,9 +41,9 @@
 				table-header-class="bg-primary text-white"
 				v-model:pagination="pagination"
 				row-key="id"
-				@update:pagination="(pagination) => buscarEmpresas({ pagination })"
-				@request="buscarEmpresas"
-				:loading="loading"
+				@update:pagination="(pagination) => syncPagination({ pagination })"
+				@request="refetch()"
+				:loading="isLoading"
 				:rows-per-page-options="[5, 10, 25, 50, 100]"
 				binary-state-sort
 			>
@@ -52,11 +52,11 @@
 						<div class="row q-gutter-xs flex-center no-wrap" style="width: 100px">
 							<div>
 								<q-btn icon="edit" dense round class="text-primary" @click="onClickEdit(props.row)" />
-								<q-tooltip> Editar </q-tooltip>
+								<q-tooltip>Editar</q-tooltip>
 							</div>
 							<div>
 								<q-btn icon="visibility" dense round class="text-primary" @click="onClickView(props.row)" />
-								<q-tooltip> Visualizar </q-tooltip>
+								<q-tooltip>Visualizar</q-tooltip>
 							</div>
 						</div>
 					</td>
@@ -116,6 +116,7 @@ import { dayjs } from '@/services/dayjs';
 import { HttpException } from '@/services/http-exception';
 import { parsePaginationFromQueryUrl, syncPaginationWithQueryUrl } from '@/services/sync-pagination-with-query-url';
 
+import { useQuery } from 'vue-query';
 import SelectPlan from '../../Components/SelectPlan.vue';
 import DialogEmpresa from './DialogEmpresa.vue';
 import { Empresa } from './Empresas.types';
@@ -127,8 +128,6 @@ const filter = reactive({
 	plans: [],
 });
 
-const empresas = ref<Empresa[]>([]);
-const loading = ref(false);
 const pagination = ref(
 	parsePaginationFromQueryUrl({
 		sortBy: 'id',
@@ -141,14 +140,9 @@ const pagination = ref(
 watch(() => pagination.value, syncPaginationWithQueryUrl, { deep: true });
 
 const abortController = ref(new AbortController());
+onUnmounted(() => abortController.value.abort());
 
-async function buscarEmpresas(props?: any) {
-	loading.value = true;
-
-	if (props?.pagination) {
-		pagination.value = { ...pagination.value, ...props.pagination };
-	}
-
+const { isLoading, data, refetch } = useQuery<Empresa[]>('area-admin-empresas', async () => {
 	const { status, data } = await api.get('/company', {
 		params: {
 			filter: filter.search,
@@ -160,18 +154,20 @@ async function buscarEmpresas(props?: any) {
 		signal: abortController.value.signal,
 	});
 
-	loading.value = false;
-
 	if (status !== 200) {
 		HttpException(data);
 		return;
 	}
 
-	empresas.value = data.data;
 	pagination.value.rowsNumber = data.meta.rowsNumber;
-}
 
-onUnmounted(() => abortController.value.abort());
+	return data.data;
+});
+
+function syncPagination(props: any) {
+	if (props?.pagination) pagination.value = { ...pagination.value, ...props.pagination };
+	return refetch.value();
+}
 
 function onClickEdit(_empresa: Empresa) {
 	const dialog = $q.dialog({
@@ -196,7 +192,7 @@ function onClickEdit(_empresa: Empresa) {
 			return false;
 		}
 
-		await buscarEmpresas();
+		await refetch.value();
 
 		$q.notify({ message: 'Empresa editada com sucesso!', type: 'positive' });
 
@@ -264,7 +260,7 @@ function onClickCreate() {
 			return false;
 		}
 
-		await buscarEmpresas();
+		await refetch.value();
 
 		$q.notify({ message: 'Empresa criada com sucesso!', type: 'positive' });
 
