@@ -5,7 +5,7 @@ import { useAuthStore } from '@/boot/stores';
 import { router } from '../boot/router';
 
 export const api = axios.create({
-	baseURL: !import.meta.env.DEV ? 'http://localhost:3000' : 'https://imoveis-backend.vercel.app/',
+	baseURL: import.meta.env.DEV ? 'http://localhost:3000' : 'https://imoveis-backend.vercel.app/',
 	validateStatus: () => true,
 });
 
