@@ -6,7 +6,7 @@ export function setup(app: App) {
 		queryClientConfig: {
 			defaultOptions: {
 				queries: {
-					cacheTime: 1000 * 60 * 2,
+					refetchInterval: 1000 * 60 * 2,
 				},
 			},
 		},
