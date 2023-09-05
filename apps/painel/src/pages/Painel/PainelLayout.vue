@@ -11,10 +11,8 @@
 		<q-page-container>
 			<q-page>
 				<router-view v-slot="{ Component }">
+					<component :is="Component" />
 					<q-ajax-bar position="bottom" color="primary" size="0.3em" />
-					<transition name="fade" mode="out-in">
-						<component :is="Component" />
-					</transition>
 				</router-view>
 			</q-page>
 		</q-page-container>
@@ -44,15 +42,3 @@ function toggleMenu() {
 	menu.expanded = !menu.expanded;
 }
 </script>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 100ms ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-	opacity: 0;
-}
-</style>

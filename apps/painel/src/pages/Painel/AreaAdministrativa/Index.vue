@@ -18,10 +18,8 @@
 
 			<div>
 				<router-view v-slot="{ Component }">
+					<component :is="Component" />
 					<q-ajax-bar position="bottom" color="primary" size="0.3em" />
-					<transition name="fade" mode="out-in">
-						<component :is="Component" />
-					</transition>
 				</router-view>
 			</div>
 		</div>
@@ -65,14 +63,3 @@ let items: Item[] = [
 
 items = items.filter((item) => acl.hasPermission(item.permission));
 </script>
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 100ms ease-in-out;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-	opacity: 0;
-}
-</style>
