@@ -46,7 +46,7 @@ defineProps<{
 const filter = ref('');
 
 const { isLoading, data, refetch } = useQuery<Role[]>('select-roles', async () => {
-	const { status, data } = await api.get('/company', { params: { filter: filter.value } });
+	const { status, data } = await api.get('/role', { params: { filter: filter.value } });
 
 	if (status !== 200) {
 		throw new Error('Erro ao buscar perfis');
@@ -56,6 +56,7 @@ const { isLoading, data, refetch } = useQuery<Role[]>('select-roles', async () =
 });
 
 function buscarRoles(str: string, update: any, abort: any) {
+	if (str.trim().length < 2) return abort();
 	filter.value = str;
 	refetch.value().then(update).catch(abort);
 }

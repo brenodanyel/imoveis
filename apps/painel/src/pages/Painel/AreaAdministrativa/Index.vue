@@ -19,7 +19,7 @@
 			<div>
 				<router-view v-slot="{ Component }">
 					<component :is="Component" />
-					<q-ajax-bar position="bottom" color="primary" size="0.3em" />
+					<q-ajax-bar position="bottom" color="primary" size="2px" />
 				</router-view>
 			</div>
 		</div>

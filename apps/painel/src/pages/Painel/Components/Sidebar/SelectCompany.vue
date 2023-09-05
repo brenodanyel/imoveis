@@ -59,6 +59,7 @@ const { isLoading, data, refetch } = useQuery<Empresa[]>('select-empresas', asyn
 });
 
 function buscarEmpresas(str: string, update: any, abort: any) {
+	if (str.trim().length < 2) return abort();
 	filter.value = str;
 	refetch.value().then(update).catch(abort);
 }
