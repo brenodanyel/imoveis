@@ -2,9 +2,9 @@
 	<q-select
 		:model-value="selected"
 		:label="multiple ? 'Perfis' : 'Perfil'"
-		:loading="loading"
+		:loading="isLoading"
 		use-input
-		:options="roles"
+		:options="data"
 		option-label="name"
 		@filter="buscarRoles"
 		@update:model-value="$emit('update:selected', $event)"
@@ -22,7 +22,7 @@
 					<q-icon name="security" color="primary" />
 				</q-item-section>
 				<q-item-section>
-					<q-item-label> {{ scope.opt.name }} </q-item-label>
+					<q-item-label>{{ scope.opt.name }}</q-item-label>
 				</q-item-section>
 			</q-item>
 		</template>
@@ -30,10 +30,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import { api } from '@/services/api';
 
+import { ref } from 'vue';
+import { useQuery } from 'vue-query';
 import { Role } from '../AreaAdministrativa/Usuarios/Usuarios.types';
 
 defineEmits(['update:selected']);
@@ -43,23 +43,20 @@ defineProps<{
 	readonly?: boolean;
 }>();
 
-const roles = ref<Role[]>([]);
-const loading = ref(false);
+const filter = ref('');
 
-async function buscarRoles(filter: string, update: any, abort: any) {
-	loading.value = true;
-
-	const { status, data } = await api.get('/role', { params: { filter } });
-
-	loading.value = false;
+const { isLoading, data, refetch } = useQuery<Role[]>('select-roles', async () => {
+	const { status, data } = await api.get('/company', { params: { filter: filter.value } });
 
 	if (status !== 200) {
-		abort();
-		return;
+		throw new Error('Erro ao buscar perfis');
 	}
 
-	roles.value = data.data;
+	return data.data;
+});
 
-	update();
+function buscarRoles(str: string, update: any, abort: any) {
+	filter.value = str;
+	refetch.value().then(update).catch(abort);
 }
 </script>

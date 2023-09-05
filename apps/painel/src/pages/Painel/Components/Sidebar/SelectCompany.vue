@@ -2,9 +2,9 @@
 	<q-select
 		:model-value="selected"
 		:label="multiple ? 'Empresas' : 'Empresa'"
-		:loading="loading"
+		:loading="isLoading"
 		use-input
-		:options="companies"
+		:options="data"
 		option-label="name"
 		@filter="buscarEmpresas"
 		@update:model-value="$emit('update:selected', $event)"
@@ -25,7 +25,7 @@
 					<q-item-label>
 						{{ scope.opt.name }}
 					</q-item-label>
-					<q-item-label caption> {{ scope.opt.id }} - {{ scope.opt.cnpj }} </q-item-label>
+					<q-item-label caption>{{ scope.opt.id }} - {{ scope.opt.cnpj }}</q-item-label>
 				</q-item-section>
 			</q-item>
 		</template>
@@ -33,11 +33,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-
 import { Empresa } from '@/pages/Painel/AreaAdministrativa/Empresas/Empresas.types';
 
 import { api } from '@/services/api';
+import { ref } from 'vue';
+import { useQuery } from 'vue-query';
 
 defineEmits(['update:selected']);
 defineProps<{
@@ -46,23 +46,20 @@ defineProps<{
 	readonly?: boolean;
 }>();
 
-const companies = ref<Empresa[]>([]);
-const loading = ref(false);
+const filter = ref('');
 
-async function buscarEmpresas(filter: string, update: any, abort: any) {
-	loading.value = true;
-
-	const { status, data } = await api.get('/company', { params: { filter } });
-
-	loading.value = false;
+const { isLoading, data, refetch } = useQuery<Empresa[]>('select-empresas', async () => {
+	const { status, data } = await api.get('/company', { params: { filter: filter.value } });
 
 	if (status !== 200) {
-		abort();
-		return;
+		throw new Error('Erro ao buscar empresas');
 	}
 
-	companies.value = data.data;
+	return data.data;
+});
 
-	update();
+function buscarEmpresas(str: string, update: any, abort: any) {
+	filter.value = str;
+	refetch.value().then(update).catch(abort);
 }
 </script>

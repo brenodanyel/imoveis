@@ -16,7 +16,7 @@ api.interceptors.request.use(async (request) => {
 		request.headers.Authorization = `Bearer ${token}`;
 	}
 
-	// await new Promise((resolve) => setTimeout(resolve, 1000));
+	// await new Promise((resolve) => setTimeout(resolve, 2000));
 
 	return request;
 });
